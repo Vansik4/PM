@@ -57,7 +57,7 @@ def main():
 
     # Agregar la imagen en la primera columna (lado izquierdo)
     with col1:
-        st.image("https://res.cloudinary.com/ddmifk9ub/image/upload/v1714666361/OFI/Logos/ofi-black.png", width=100)  # Ajusta el ancho según sea necesario
+        st.image("https://res.cloudinary.com/ddmifk9ub/image/upload/v1714666361/OFI/Logos/ofi-black.png", width=300)  # Ajusta el ancho según sea necesario
 
     # Agregar el contenido principal en la segunda columna
     with col2:
