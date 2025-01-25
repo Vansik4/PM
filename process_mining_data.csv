@@ -1,0 +1,101 @@
+CASE KEY,ACTIVITY,TIMESTAMP
+Case_5,Send Offer,2025-01-01 08:59:00
+Case_6,Receive Acceptance,2025-01-01 09:01:00
+Case_4,Apply for Credit,2025-01-01 12:06:00
+Case_13,Apply for Credit,2025-01-01 13:04:00
+Case_15,Receive Acceptance,2025-01-01 19:11:00
+Case_2,Issue Credit,2025-01-01 21:45:00
+Case_4,Send Offer,2025-01-01 21:50:00
+Case_3,Receive Acceptance,2025-01-01 22:05:00
+Case_16,Receive Acceptance,2025-01-01 22:08:00
+Case_20,Close Case,2025-01-01 22:34:00
+Case_6,Close Case,2025-01-01 23:30:00
+Case_12,Apply for Credit,2025-01-02 02:41:00
+Case_3,Approve Credit,2025-01-02 02:45:00
+Case_13,Issue Credit,2025-01-02 02:55:00
+Case_16,Receive Acceptance,2025-01-02 04:47:00
+Case_7,Approve Credit,2025-01-02 07:50:00
+Case_2,Approve Credit,2025-01-02 09:42:00
+Case_3,Close Case,2025-01-02 09:48:00
+Case_18,Receive Acceptance,2025-01-02 13:28:00
+Case_2,Approve Credit,2025-01-02 13:56:00
+Case_20,Apply for Credit,2025-01-02 14:12:00
+Case_12,Apply for Credit,2025-01-02 15:05:00
+Case_19,Issue Credit,2025-01-02 17:26:00
+Case_4,Reject Credit,2025-01-02 17:35:00
+Case_6,Issue Credit,2025-01-02 18:58:00
+Case_5,Reject Credit,2025-01-02 21:05:00
+Case_10,Issue Credit,2025-01-02 21:27:00
+Case_18,Issue Credit,2025-01-02 22:50:00
+Case_3,Issue Credit,2025-01-03 01:19:00
+Case_19,Close Case,2025-01-03 04:00:00
+Case_13,Issue Credit,2025-01-03 04:12:00
+Case_2,Receive Acceptance,2025-01-03 04:59:00
+Case_15,Receive Acceptance,2025-01-03 11:44:00
+Case_1,Apply for Credit,2025-01-03 17:28:00
+Case_6,Receive Acceptance,2025-01-03 19:29:00
+Case_19,Receive Acceptance,2025-01-03 22:11:00
+Case_12,Issue Credit,2025-01-04 00:23:00
+Case_4,Close Case,2025-01-04 00:31:00
+Case_12,Issue Credit,2025-01-04 00:52:00
+Case_3,Apply for Credit,2025-01-04 03:56:00
+Case_10,Apply for Credit,2025-01-04 05:20:00
+Case_18,Apply for Credit,2025-01-04 05:29:00
+Case_5,Issue Credit,2025-01-04 07:06:00
+Case_15,Approve Credit,2025-01-04 10:22:00
+Case_11,Close Case,2025-01-04 11:44:00
+Case_5,Reject Credit,2025-01-04 12:42:00
+Case_3,Send Offer,2025-01-04 12:58:00
+Case_2,Reject Credit,2025-01-04 13:12:00
+Case_20,Credit Check,2025-01-04 14:59:00
+Case_14,Issue Credit,2025-01-04 18:11:00
+Case_12,Approve Credit,2025-01-04 18:58:00
+Case_3,Approve Credit,2025-01-04 20:22:00
+Case_16,Approve Credit,2025-01-04 20:56:00
+Case_7,Receive Acceptance,2025-01-04 21:04:00
+Case_14,Apply for Credit,2025-01-04 22:43:00
+Case_13,Receive Acceptance,2025-01-04 22:57:00
+Case_1,Apply for Credit,2025-01-05 01:01:00
+Case_17,Credit Check,2025-01-05 01:13:00
+Case_13,Receive Acceptance,2025-01-05 02:01:00
+Case_16,Close Case,2025-01-05 02:31:00
+Case_15,Credit Check,2025-01-05 05:20:00
+Case_18,Close Case,2025-01-05 05:55:00
+Case_12,Approve Credit,2025-01-05 09:21:00
+Case_12,Credit Check,2025-01-05 10:25:00
+Case_11,Close Case,2025-01-05 13:34:00
+Case_16,Close Case,2025-01-05 13:58:00
+Case_18,Reject Credit,2025-01-05 14:33:00
+Case_4,Issue Credit,2025-01-05 16:24:00
+Case_20,Credit Check,2025-01-05 17:57:00
+Case_19,Apply for Credit,2025-01-05 18:09:00
+Case_18,Receive Acceptance,2025-01-05 18:33:00
+Case_10,Reject Credit,2025-01-05 20:39:00
+Case_5,Credit Check,2025-01-05 20:39:00
+Case_8,Send Offer,2025-01-05 23:24:00
+Case_4,Issue Credit,2025-01-06 02:35:00
+Case_7,Send Offer,2025-01-06 04:41:00
+Case_6,Send Offer,2025-01-06 04:50:00
+Case_3,Close Case,2025-01-06 05:26:00
+Case_6,Issue Credit,2025-01-06 05:52:00
+Case_20,Reject Credit,2025-01-06 11:24:00
+Case_17,Apply for Credit,2025-01-06 15:01:00
+Case_18,Send Offer,2025-01-06 18:07:00
+Case_13,Issue Credit,2025-01-06 18:21:00
+Case_16,Reject Credit,2025-01-06 21:17:00
+Case_7,Apply for Credit,2025-01-06 23:10:00
+Case_12,Reject Credit,2025-01-06 23:51:00
+Case_4,Credit Check,2025-01-07 01:12:00
+Case_12,Reject Credit,2025-01-07 02:11:00
+Case_2,Send Offer,2025-01-07 02:31:00
+Case_5,Send Offer,2025-01-07 02:40:00
+Case_19,Credit Check,2025-01-07 03:41:00
+Case_3,Receive Acceptance,2025-01-07 05:29:00
+Case_20,Credit Check,2025-01-07 06:26:00
+Case_5,Send Offer,2025-01-07 10:06:00
+Case_11,Send Offer,2025-01-07 11:22:00
+Case_18,Apply for Credit,2025-01-07 13:27:00
+Case_6,Apply for Credit,2025-01-07 16:59:00
+Case_16,Reject Credit,2025-01-07 20:44:00
+Case_12,Approve Credit,2025-01-07 22:58:00
+Case_5,Issue Credit,2025-01-08 02:58:00
