@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import pm4py
+import graphviz
 
 # Function to load and validate the CSV file
 def load_and_validate_csv(file_path):
