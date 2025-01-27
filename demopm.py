@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import pm4py
-import graphviz
 
 # Function to load and validate the CSV file
 def load_and_validate_csv(file_path):
@@ -52,60 +51,51 @@ def generate_and_display_graph(df_filtered):
 
 # Main application
 def main():
-    # Crear dos columnas: una para la imagen y otra para el contenido
-    col1, col2 = st.columns([1, 4])  # La primera columna es más estrecha para la imagen
+    st.title("Dynamic Process Mining Interface for Credit Approval")
+    st.write("Filter by activities and visualize the process flow.")
 
-    # Agregar la imagen en la primera columna (lado izquierdo)
-    with col1:
-        st.image("https://res.cloudinary.com/ddmifk9ub/image/upload/v1714666361/OFI/Logos/ofi-black.png", width=300)  # Ajusta el ancho según sea necesario
+    # Load and validate the CSV file
+    file_path = "corrected_process_mining_data.csv"
+    df = load_and_validate_csv(file_path)
+    if df is None:
+        return
 
-    # Agregar el contenido principal en la segunda columna
-    with col2:
-        st.title("Dynamic Process Mining Interface for Credit Approval")
-        st.write("Filter by activities and visualize the process flow.")
+    # Prepare the DataFrame for process mining
+    df = prepare_dataframe(df)
+    if df is None:
+        return
 
-        # Load and validate the CSV file
-        file_path = "corrected_process_mining_data.csv"
-        df = load_and_validate_csv(file_path)
-        if df is None:
-            return
+    # List of unique activities
+    unique_activities = df['ACTIVITY'].unique().tolist()
 
-        # Prepare the DataFrame for process mining
-        df = prepare_dataframe(df)
-        if df is None:
-            return
+    # Activity selection using a multiselect widget
+    selected_activities = st.multiselect(
+        "Select activities to include in the analysis:",
+        unique_activities,
+        default=unique_activities[:2]  # Initial selection of two activities
+    )
 
-        # List of unique activities
-        unique_activities = df['ACTIVITY'].unique().tolist()
+    # Filter DataFrame by selected activities
+    if selected_activities:
+        df_filtered = df[df['ACTIVITY'].isin(selected_activities)]
 
-        # Activity selection using a multiselect widget
-        selected_activities = st.multiselect(
-            "Select activities to include in the analysis:",
-            unique_activities,
-            default=unique_activities[:2]  # Initial selection of two activities
+        # Generate and display the process flow graph
+        generate_and_display_graph(df_filtered)
+
+        # Display the filtered DataFrame with a download option
+        st.write("### Filtered Event Details")
+        st.dataframe(df_filtered)
+
+        # Provide a download link for the filtered DataFrame
+        csv = df_filtered.to_csv(index=False).encode('utf-8')
+        st.download_button(
+            label="Download Filtered Data as CSV",
+            data=csv,
+            file_name="filtered_events.csv",
+            mime="text/csv"
         )
-
-        # Filter DataFrame by selected activities
-        if selected_activities:
-            df_filtered = df[df['ACTIVITY'].isin(selected_activities)]
-
-            # Generate and display the process flow graph
-            generate_and_display_graph(df_filtered)
-
-            # Display the filtered DataFrame with a download option
-            st.write("### Filtered Event Details")
-            st.dataframe(df_filtered)
-
-            # Provide a download link for the filtered DataFrame
-            csv = df_filtered.to_csv(index=False).encode('utf-8')
-            st.download_button(
-                label="Download Filtered Data as CSV",
-                data=csv,
-                file_name="filtered_events.csv",
-                mime="text/csv"
-            )
-        else:
-            st.warning("Please select at least one activity.")
+    else:
+        st.warning("Please select at least one activity.")
 
 # Run the application
 if __name__ == "__main__":
