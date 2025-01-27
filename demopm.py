@@ -65,7 +65,7 @@ def main():
         st.write("Filter by activities and visualize the process flow.")
 
         # Load and validate the CSV file
-        file_path = "process_mining_data.csv"
+        file_path = "corrected_process_mining_data.csv"
         df = load_and_validate_csv(file_path)
         if df is None:
             return
