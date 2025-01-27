@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import pm4py
-import graphviz
+from datetime import datetime
 
 # Function to load and validate the CSV file
 def load_and_validate_csv(file_path):
@@ -50,70 +50,82 @@ def generate_and_display_graph(df_filtered):
     except Exception as e:
         st.error(f"An error occurred while generating the process flow graph: {e}")
 
+# Function to calculate KPIs
+def calculate_kpis(df_filtered):
+    try:
+        # Number of unique cases
+        num_cases = df_filtered['CASE KEY'].nunique()
+        
+        # Total number of activities
+        num_activities = df_filtered.shape[0]
+        
+        # Average time per case
+        df_filtered['TIMESTAMP'] = pd.to_datetime(df_filtered['TIMESTAMP'])
+        case_durations = df_filtered.groupby('CASE KEY')['TIMESTAMP'].apply(lambda x: (x.max() - x.min()).total_seconds() / 3600)
+        avg_time_per_case = case_durations.mean()
+        
+        return num_cases, num_activities, avg_time_per_case
+    except Exception as e:
+        st.error(f"An error occurred while calculating KPIs: {e}")
+        return None, None, None
+
 # Main application
 def main():
-    # Crear dos columnas: una para la imagen y otra para el contenido
-    col1, col2 = st.columns([1, 4])  # La primera columna es más estrecha para la imagen
+    st.title("Dynamic Process Mining Interface for Credit Approval")
+    st.write("Filter by activities and visualize the process flow.")
 
-    # Agregar la imagen en la primera columna (lado izquierdo)
-    with col1:
-        st.image("https://res.cloudinary.com/ddmifk9ub/image/upload/v1714666361/OFI/Logos/ofi-black.png", width=300)  # Ajusta el ancho según sea necesario
+    # Load and validate the CSV file
+    file_path = "corrected_process_mining_data.csv"
+    df = load_and_validate_csv(file_path)
+    if df is None:
+        return
 
-    # Agregar el contenido principal en la segunda columna
-    with col2:
-        st.title("Dynamic Process Mining Interface for Credit Approval")
-        st.write("Filter by activities and visualize the process flow.")
+    # Prepare the DataFrame for process mining
+    df = prepare_dataframe(df)
+    if df is None:
+        return
 
-        # Load and validate the CSV file
-        file_path = "corrected_process_mining_data.csv"
-        df = load_and_validate_csv(file_path)
-        if df is None:
-            return
+    # List of unique activities
+    unique_activities = df['ACTIVITY'].unique().tolist()
 
-        # Prepare the DataFrame for process mining
-        df = prepare_dataframe(df)
-        if df is None:
-            return
+    # Activity selection using a multiselect widget
+    selected_activities = st.multiselect(
+        "Select activities to include in the analysis:",
+        unique_activities,
+        default=unique_activities[:2]  # Initial selection of two activities
+    )
 
-        # List of unique activities and case keys
-        unique_activities = df['ACTIVITY'].unique().tolist()
-        unique_case_keys = df['CASE KEY'].unique().tolist()
+    # Filter DataFrame by selected activities
+    if selected_activities:
+        df_filtered = df[df['ACTIVITY'].isin(selected_activities)]
 
-        # Activity selection using a multiselect widget
-        selected_activities = st.multiselect(
-            "Select activities to include in the analysis:",
-            unique_activities,
-            default=unique_activities[:2]  # Initial selection of two activities
+        # Calculate KPIs
+        num_cases, num_activities, avg_time_per_case = calculate_kpis(df_filtered)
+
+        # Display KPIs
+        st.write("### Key Performance Indicators (KPIs)")
+        col1, col2, col3 = st.columns(3)
+        col1.metric("Number of Unique Cases", num_cases)
+        col2.metric("Total Number of Activities", num_activities)
+        col3.metric("Average Time per Case (hours)", round(avg_time_per_case, 2))
+
+        # Generate and display the process flow graph
+        generate_and_display_graph(df_filtered)
+
+        # Display the filtered DataFrame with a download option
+        st.write("### Filtered Event Details")
+        st.dataframe(df_filtered)
+
+        # Provide a download link for the filtered DataFrame
+        csv = df_filtered.to_csv(index=False).encode('utf-8')
+        st.download_button(
+            label="Download Filtered Data as CSV",
+            data=csv,
+            file_name="filtered_events.csv",
+            mime="text/csv"
         )
-
-        # Case key selection using a multiselect widget
-        selected_case_keys = st.multiselect(
-            "Select case keys to include in the analysis:",
-            unique_case_keys,
-            default=unique_case_keys[:2]  # Initial selection of two case keys
-        )
-
-        # Filter DataFrame by selected activities and case keys
-        if selected_activities and selected_case_keys:
-            df_filtered = df[df['ACTIVITY'].isin(selected_activities) & df['CASE KEY'].isin(selected_case_keys)]
-
-            # Generate and display the process flow graph
-            generate_and_display_graph(df_filtered)
-
-            # Display the filtered DataFrame with a download option
-            st.write("### Filtered Event Details")
-            st.dataframe(df_filtered)
-
-            # Provide a download link for the filtered DataFrame
-            csv = df_filtered.to_csv(index=False).encode('utf-8')
-            st.download_button(
-                label="Download Filtered Data as CSV",
-                data=csv,
-                file_name="filtered_events.csv",
-                mime="text/csv"
-            )
-        else:
-            st.warning("Please select at least one activity and one case key.")
+    else:
+        st.warning("Please select at least one activity.")
 
 # Run the application
 if __name__ == "__main__":
