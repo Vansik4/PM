@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import pm4py
+import graphviz
 
 # Function to load and validate the CSV file
 def load_and_validate_csv(file_path):
@@ -51,51 +52,68 @@ def generate_and_display_graph(df_filtered):
 
 # Main application
 def main():
-    st.title("Dynamic Process Mining Interface for Credit Approval")
-    st.write("Filter by activities and visualize the process flow.")
+    # Crear dos columnas: una para la imagen y otra para el contenido
+    col1, col2 = st.columns([1, 4])  # La primera columna es más estrecha para la imagen
 
-    # Load and validate the CSV file
-    file_path = "corrected_process_mining_data.csv"
-    df = load_and_validate_csv(file_path)
-    if df is None:
-        return
+    # Agregar la imagen en la primera columna (lado izquierdo)
+    with col1:
+        st.image("https://res.cloudinary.com/ddmifk9ub/image/upload/v1714666361/OFI/Logos/ofi-black.png", width=300)  # Ajusta el ancho según sea necesario
 
-    # Prepare the DataFrame for process mining
-    df = prepare_dataframe(df)
-    if df is None:
-        return
+    # Agregar el contenido principal en la segunda columna
+    with col2:
+        st.title("Dynamic Process Mining Interface for Credit Approval")
+        st.write("Filter by activities and visualize the process flow.")
 
-    # List of unique activities
-    unique_activities = df['ACTIVITY'].unique().tolist()
+        # Load and validate the CSV file
+        file_path = "corrected_process_mining_data.csv"
+        df = load_and_validate_csv(file_path)
+        if df is None:
+            return
 
-    # Activity selection using a multiselect widget
-    selected_activities = st.multiselect(
-        "Select activities to include in the analysis:",
-        unique_activities,
-        default=unique_activities[:2]  # Initial selection of two activities
-    )
+        # Prepare the DataFrame for process mining
+        df = prepare_dataframe(df)
+        if df is None:
+            return
 
-    # Filter DataFrame by selected activities
-    if selected_activities:
-        df_filtered = df[df['ACTIVITY'].isin(selected_activities)]
+        # List of unique activities and case keys
+        unique_activities = df['ACTIVITY'].unique().tolist()
+        unique_case_keys = df['CASE KEY'].unique().tolist()
 
-        # Generate and display the process flow graph
-        generate_and_display_graph(df_filtered)
-
-        # Display the filtered DataFrame with a download option
-        st.write("### Filtered Event Details")
-        st.dataframe(df_filtered)
-
-        # Provide a download link for the filtered DataFrame
-        csv = df_filtered.to_csv(index=False).encode('utf-8')
-        st.download_button(
-            label="Download Filtered Data as CSV",
-            data=csv,
-            file_name="filtered_events.csv",
-            mime="text/csv"
+        # Activity selection using a multiselect widget
+        selected_activities = st.multiselect(
+            "Select activities to include in the analysis:",
+            unique_activities,
+            default=unique_activities[:2]  # Initial selection of two activities
         )
-    else:
-        st.warning("Please select at least one activity.")
+
+        # Case key selection using a multiselect widget
+        selected_case_keys = st.multiselect(
+            "Select case keys to include in the analysis:",
+            unique_case_keys,
+            default=unique_case_keys[:2]  # Initial selection of two case keys
+        )
+
+        # Filter DataFrame by selected activities and case keys
+        if selected_activities and selected_case_keys:
+            df_filtered = df[df['ACTIVITY'].isin(selected_activities) & df['CASE KEY'].isin(selected_case_keys)]
+
+            # Generate and display the process flow graph
+            generate_and_display_graph(df_filtered)
+
+            # Display the filtered DataFrame with a download option
+            st.write("### Filtered Event Details")
+            st.dataframe(df_filtered)
+
+            # Provide a download link for the filtered DataFrame
+            csv = df_filtered.to_csv(index=False).encode('utf-8')
+            st.download_button(
+                label="Download Filtered Data as CSV",
+                data=csv,
+                file_name="filtered_events.csv",
+                mime="text/csv"
+            )
+        else:
+            st.warning("Please select at least one activity and one case key.")
 
 # Run the application
 if __name__ == "__main__":
