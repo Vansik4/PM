@@ -85,8 +85,9 @@ def main():
     if df is None:
         return
 
-    # List of unique activities
+    # List of unique activities and cases
     unique_activities = df['ACTIVITY'].unique().tolist()
+    unique_cases = df['CASE KEY'].unique().tolist()
 
     # Activity selection using a multiselect widget
     selected_activities = st.multiselect(
@@ -95,9 +96,16 @@ def main():
         default=unique_activities[:2]  # Initial selection of two activities
     )
 
-    # Filter DataFrame by selected activities
-    if selected_activities:
-        df_filtered = df[df['ACTIVITY'].isin(selected_activities)]
+    # Case selection using a multiselect widget
+    selected_cases = st.multiselect(
+        "Select cases to include in the analysis:",
+        unique_cases,
+        default=unique_cases[:5]  # Initial selection of five cases
+    )
+
+    # Filter DataFrame by selected activities and cases
+    if selected_activities and selected_cases:
+        df_filtered = df[df['ACTIVITY'].isin(selected_activities) & df['CASE KEY'].isin(selected_cases)]
 
         # Calculate KPIs
         num_cases, num_activities, avg_time_per_case = calculate_kpis(df_filtered)
@@ -125,7 +133,7 @@ def main():
             mime="text/csv"
         )
     else:
-        st.warning("Please select at least one activity.")
+        st.warning("Please select at least one activity and one case.")
 
 # Run the application
 if __name__ == "__main__":
