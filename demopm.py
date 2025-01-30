@@ -48,7 +48,7 @@ def generate_and_display_graph(df_filtered):
         st.image("heu_net_output.png", caption="Process Flow Diagram")
         
         # Provide a download link for the graph
-        with open("dfg_output.png", "rb") as file:
+        with open("heu_net_output.png", "rb") as file:
             btn = st.download_button(
                 label="Download Process Flow Graph",
                 data=file,
