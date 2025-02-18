@@ -1,5 +1,14 @@
 streamlit
 pandas
 pm4py
-graphviz
+requests
+matplotlib
 seaborn
+numpy
+pyodbc
+networkx
+fuzzywuzzy
+python-Levenshtein  # Requerido por fuzzywuzzy para mejorar el rendimiento
+openai
+textblob
+plotly
