@@ -1,2 +1,2 @@
 graphviz
-msodbcsql18
+ACCEPT_EULA=Y msodbcsql18
