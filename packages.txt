@@ -1,3 +1,2 @@
 graphviz
-ACCEPT_EULA=Y
-msodbcsql17
+msodbcsql17 ACCEPT_EULA=Y
