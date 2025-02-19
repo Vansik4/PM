@@ -411,8 +411,8 @@ def main():
                 df_filtered = df[df['ACTIVITY'].isin(selected_activities) & df['CASE KEY'].isin(selected_cases)]
                 # Agregar el selector para elegir la métrica de la gráfica
                 metric_type = st.radio(
-                    "Seleccione la métrica para la gráfica:",
-                    ["Número de Casos"]
+                    "Select type:",
+                    ["Case Count"]
                 )
                 # Generar y mostrar la gráfica según la opción seleccionada
                 generate_and_display_graph(df_filtered, metric_type)
