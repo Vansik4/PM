@@ -432,7 +432,7 @@ def main():
         port = st.secrets["port"] 
 
         connection_string = (
-            "DRIVER={ODBC Driver 18 for SQL Server};"
+            "DRIVER={ODBC Driver 17 for SQL Server};"
             f"SERVER={server},{port};"
             f"DATABASE={database};"
             f"UID={username};"
