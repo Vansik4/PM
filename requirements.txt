@@ -13,3 +13,4 @@ openai
 textblob
 plotly
 openpyxl
+wordcloud
