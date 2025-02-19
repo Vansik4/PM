@@ -273,7 +273,7 @@ def prepare_dataframe(df):
         st.error(f"An error occurred while preparing the DataFrame: {e}")
         return None
 
-def generate_and_display_graph(df_filtered, metric_type="Número de Casos"):
+def generate_and_display_graph(df_filtered, metric_type="Case Count"):
     try:
         # Descubrir la red heurística con PM4Py
         heu_net = pm4py.discover_heuristics_net(df_filtered)
@@ -281,7 +281,7 @@ def generate_and_display_graph(df_filtered, metric_type="Número de Casos"):
         # Definir el variant según la métrica seleccionada:
         # Para "Número de Casos" se utiliza la variante "frequency" (por defecto)
         # Para "Tiempo" se utiliza la variante "performance"
-        if metric_type == "Número de Casos":
+        if metric_type == "Case Count":
             variant = "frequency"
         elif metric_type == "Tiempo":
             variant = "performance"
@@ -506,8 +506,8 @@ def main():
                 df_filtered = df[df['ACTIVITY'].isin(selected_activities) & df['CASE KEY'].isin(selected_cases)]
                 # Puedes agregar el selector de métrica aquí también si lo requieres en esta página.
                 metric_type = st.radio(
-                "Seleccione la métrica para la gráfica:",
-                ["Número de Casos", "Tiempo"]
+                "Select Type:",
+                ["Case Count"]
             )
                 generate_and_display_graph(df_filtered, metric_type)
             else:
