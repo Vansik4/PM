@@ -1,2 +1,2 @@
 graphviz
-msodbcsql17
+msodbcsql18
